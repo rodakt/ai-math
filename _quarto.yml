@@ -1,0 +1,20 @@
+project:
+  type: default
+  output-dir: _output
+  render:
+    - slajdy.qmd
+
+lang: pl
+
+execute:
+  freeze: auto
+
+format:
+  revealjs:
+    embed-resources: true
+    slide-number: true
+    transition: none
+    width: 1280
+    height: 720
+    theme: [default, styles.scss]
+    include-in-header: fonty/caveat.html

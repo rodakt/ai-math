@@ -1,0 +1,538 @@
+/*-- scss:defaults --*/
+$presentation-font-size-root: 44px;
+$presentation-heading-font-weight: 700;
+
+// paleta: każdy tekst ma kontrast co najmniej 4,5:1 z tłem (rzutnik spłaszcza kontrast)
+$granat: #1f4e79;            // człowiek, tor bez oporu, paradygmat algorytmiczny (8,7:1)
+$pomarancz: #a65a17;         // narzędzie, maszyna, tor z oporem, paradygmat trenowany (5,1:1)
+$czerwien: #c62828;          // błąd (5,6:1)
+$zielen: #59a14f;            // sprawdzone: tylko wypełnienia i linie (3,2:1)
+$zielen-tekst: #3f7f37;      // sprawdzone: napisy (4,9:1)
+$tekst-przygaszony: #555;    // drugi plan; jaśniejsze szarości tylko na linie i obrysy (7,5:1)
+
+/*-- scss:rules --*/
+/* drabina kompetencji: szczebel bieżący (.now), już oddany (.done), otwarty (.open) */
+.ladder {
+  display: flex;
+  gap: 0.4em;
+  justify-content: center;
+  font-size: 0.6em;
+  margin: 1em 0;
+}
+.ladder span {
+  padding: 0.25em 0.6em;
+  border-radius: 0.3em;
+  background: #e8e8e8;
+  color: $tekst-przygaszony;
+  border: 2px solid transparent;
+}
+.ladder span.now { background: $granat; color: white; }
+.ladder span.done { background: #c9d8e8; color: $granat; }
+.ladder span.open { background: transparent; border: 2px dashed #aaa; }
+/* na ciemnym tle slajdu sekcji; stopnie różni tło kafelka, napis zawsze co najmniej 4,5:1 */
+.has-dark-background .ladder span { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); }
+.has-dark-background .ladder span.now { background: white; color: $granat; font-weight: 700; }
+.has-dark-background .ladder span.done { background: rgba(255,255,255,0.22); color: white; }
+.has-dark-background .ladder span.open { background: transparent; border-color: rgba(255,255,255,0.5); }
+.big {
+  font-size: 1.3em;
+  font-weight: 700;
+  text-align: center;
+}
+.placeholder {
+  border: 3px dashed #bbb;
+  color: $tekst-przygaszony;
+  padding: 2em 1em;
+  text-align: center;
+}
+.reveal table { font-size: 0.8em; }
+/* punktor pojawia się dopiero razem z fragmentem */
+.reveal li:has(> .fragment:first-child:not(.visible))::marker { color: transparent; }
+
+/* oś czasu w przerywniku */
+.reveal .timeline { width: 1150px; height: auto; max-width: none; max-height: none; font-family: inherit; }
+.timeline text { font-size: 25px; fill: #333; }
+.timeline .years text { font-size: 25px; fill: $tekst-przygaszony; text-anchor: middle; }
+.timeline .years line { stroke: #eee; stroke-width: 1; }
+.timeline .lane { stroke-width: 3; }
+.timeline .lane.alg { stroke: $granat; }
+.timeline .lane.math { stroke: #333; }
+.timeline .lane.train { stroke: $pomarancz; }
+.timeline .track.math { fill: #333; }
+.timeline .ev.math circle { fill: #333; }
+.timeline .ev text.sub { font-size: 25px; font-weight: 400; fill: #555; }
+.timeline .contrib { stroke-width: 3; }
+.timeline .contrib.alg { stroke: $granat; }
+.timeline .contrib.train { stroke: $pomarancz; }
+.timeline .future { fill: #e8e8e8; stroke: #888; stroke-width: 2; stroke-dasharray: 6 4; }
+.timeline .future-label { font-size: 25px; fill: $tekst-przygaszony; font-style: italic; }
+.timeline .szczebel, .timeline .ev.key text.szczebel { font-size: 25px; font-style: italic; fill: $tekst-przygaszony; font-weight: 400; }
+.timeline .rola { font-size: 27px; font-weight: 700; }
+.timeline .rola.alg { fill: $granat; }
+.timeline .rola.train { fill: $pomarancz; }
+.timeline .track { font-size: 25px; font-weight: 700; letter-spacing: 0.1em; }
+.timeline .track.alg { fill: $granat; }
+.timeline .track.train { fill: $pomarancz; }
+.timeline .ev line { stroke-width: 2; }
+.timeline .ev.alg line, .timeline .ev.alg circle { stroke: $granat; fill: $granat; }
+.timeline .ev.train line, .timeline .ev.train circle { stroke: $pomarancz; fill: $pomarancz; }
+.timeline .ev.key text { font-weight: 700; fill: #111; }
+.timeline .winter { fill: #e6eef7; }
+.timeline .winter-label { font-size: 25px; fill: #4f6c8c; text-anchor: middle; font-style: italic; }
+
+.strassen { font-size: 0.8em; }
+.reveal table td, .reveal table th { padding: 0.25em 0.5em; }
+
+/* podsumowanie: drabina z kamieniami milowymi i odstępami */
+.ladder-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  margin: 1em 0;
+  font-size: 0.78em;
+}
+.ladder-line div { display: flex; flex-direction: column; align-items: center; gap: 0.3em; text-align: center; }
+.ladder-line span { padding: 0.3em 0.6em; border-radius: 0.3em; line-height: 1.2; }
+.ladder-line span.done { background: $granat; color: white; }
+.ladder-line span.open { border: 2px dashed #888; color: #555; }
+.ladder-line b { font-size: 0.85em; }
+.ladder-line i { white-space: nowrap; color: $pomarancz; font-style: normal; font-weight: 700; padding-bottom: 1.2em; }
+
+
+.reveal .caption { font-size: 0.65em; color: #555; margin-top: -0.6em; }
+
+/* slajd otwierający: dwa równorzędne wydarzenia */
+.reveal .event {
+  border-left: 0.25em solid $granat;
+  padding: 0.1em 0 0.1em 0.6em;
+  margin-bottom: 0.8em;
+  font-size: 0.85em;
+  line-height: 1.3;
+}
+.reveal .event p { margin: 0.1em 0; }
+.reveal .event .date { font-weight: 700; color: $granat; font-size: 1.1em; }
+
+/* łańcuch: proza → zapis w Lean → dowód */
+.lean-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-size: 0.85em;
+  margin: 0.8em 0;
+}
+.lean-chain div { border: 2px solid $granat; border-radius: 0.3em; padding: 0.3em 0.7em; text-align: center; line-height: 1.2; }
+.lean-chain i { font-style: normal; font-weight: 700; color: $pomarancz; white-space: nowrap; }
+
+.reveal .quote { font-size: 1em; font-style: italic; color: #333; border-left: 0.25em solid #ccc; padding-left: 0.6em; margin-top: 1em; }
+
+/* mapa województw i jej graf: kropki → kreski → kolorowanie kropek → kolorowanie mapy (kroki fragmentów) */
+.reveal .mapa-woj { width: 100%; height: auto; max-height: 520px; }
+.mapa-woj path { fill: #e4e4e4; stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
+.reveal section:has(.mapa-kolor.visible) .mapa-woj path { animation: woj-kolor 0.3s var(--d) forwards; }
+@keyframes woj-kolor { to { fill: var(--c); } }
+.mapa-woj .graf line { stroke: #333; stroke-width: 3; opacity: 0; transition: opacity 0.6s; }
+.mapa-woj .graf circle { fill: #8a8a8a; stroke: white; stroke-width: 3; transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 0.5s; }
+.reveal section:has(.mapa-kropki.visible) .mapa-woj .graf circle { transform: scale(1); }
+.reveal section:has(.mapa-kreski.visible) .mapa-woj .graf line { opacity: 1; }
+.reveal section:has(.mapa-kropki-kolor.visible) .mapa-woj .graf circle { fill: var(--c); }
+
+/* przed elektroniką: cztery karty na osi czasu */
+.os-czasu { display: grid; grid-template-columns: 0.8fr 1fr 1fr 1.3fr; margin-top: 1.4em; }
+.os-karta { display: flex; flex-direction: column; text-align: center; min-width: 0; }
+.os-karta p { margin: 0; }
+.reveal .os-karta img, .reveal .os-karta svg {
+  display: block; width: 88%; height: 260px; margin: 0 auto 0.6em; object-fit: contain;
+}
+.reveal .os-karta img.kadr-gora { object-fit: cover; object-position: top; box-shadow: 0 0.1em 0.4em rgba(0,0,0,0.25); }
+.os-karta .rok {
+  display: block; position: relative; padding-top: 0.5em;
+  border-top: 3px solid $granat; font-weight: 700; color: $granat; font-size: 0.8em;
+}
+.os-karta .rok::before {
+  content: ""; position: absolute; top: -0.45em; left: calc(50% - 0.35em);
+  width: 0.7em; height: 0.7em; border-radius: 50%; background: $granat;
+}
+.os-karta .co { display: block; font-size: 0.75em; color: #555; }
+.prony .p1 { fill: $granat; }
+.prony .p2 { fill: #6b8fb3; }
+.prony .p3 { fill: $pomarancz; }
+.prony .strop { stroke: #bbb; stroke-width: 1.5; }
+.prony .etykieta { font-size: 27px; font-weight: 700; }
+.prony .etykieta.p2 { fill: #4f6c8c; }
+.prony .etykieta.p3 { font-size: 32px; }
+.reveal .zrodla { position: absolute; bottom: 0; left: 0; font-size: 0.35em; color: $tekst-przygaszony; }
+
+/* tabela strzelnicza: tory bez oporu i z oporem, schemat kroków */
+.tabela-strzelnicza h3 { font-size: 0.7em; margin: 0 0 0.2em; }
+.reveal .tory { width: 100%; height: auto; }
+.tory .ziemia { stroke: #999; stroke-width: 2; }
+.tory .tor, .tory .cien { fill: none; stroke-linecap: round; }
+.tory .tor { stroke-width: 2.5; }
+.tory .tor.bez { stroke: $granat; }
+.tory .tor.opor { stroke: $pomarancz; }
+.tory .tor.glowny { stroke-width: 5; }
+.tory .cien { stroke: #bbb; stroke-width: 1.5; stroke-dasharray: 6 5; }
+.tory .kat { font-size: 23px; fill: #555; text-anchor: middle; }
+.tory .kat.glowny { font-weight: 700; fill: #111; }
+.tory .dzialo { fill: #333; }
+.tabela-strzelnicza .wzory { font-size: 0.6em; text-align: center; }
+.tabela-strzelnicza .wzory p { margin: 0.3em 0; }
+.kroki-opis { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.3em; font-size: 0.55em; line-height: 1.3; }
+.reveal .kroki { width: 9em; height: auto; flex: none; }
+.kroki line { stroke: $pomarancz; stroke-width: 3; }
+.kroki .grot { fill: $pomarancz; }
+.kroki circle { fill: $granat; }
+/* skan tabeli wjeżdża na wierzch jak kartka */
+.reveal .skan-tabeli {
+  position: absolute; left: 3%; top: 15%; width: 42%;
+  background: white; transform: rotate(-2deg);
+  box-shadow: 0 0.3em 1.2em rgba(0,0,0,0.35);
+}
+.tory .kat { paint-order: stroke; stroke: white; stroke-width: 5px; stroke-linejoin: round; }
+.reveal .skan-tabeli img { margin: 0; width: 100%; display: block; }
+.reveal .skan-tabeli .caption { margin: 0.2em 0.5em 0.3em; font-size: 0.4em; }
+
+/* „komputer” to był zawód: czas jednego toru, paski w tej samej skali */
+.zawod img { margin: 0; }
+.paski-czasu { font-size: 0.6em; margin-top: 0.4em; }
+.paski-czasu p { margin: 0 0 0.9em; display: grid; grid-template-columns: 1fr; }
+.paski-czasu .naglowek { font-weight: 700; color: #555; }
+.paski-czasu .etykieta { display: block; }
+.paski-czasu .pasek { display: block; height: 1.4em; min-width: 2px; background: $pomarancz; margin: 0.15em 0; }
+.paski-czasu .pasek.eniac { background: $granat; }
+.paski-czasu .wartosc { display: block; font-weight: 700; font-size: 1.3em; }
+.paski-czasu .puenta { display: block; font-size: 1.5em; font-weight: 700; color: $granat; margin-top: 0.4em; }
+.reveal .zawod .caption { font-size: 0.55em; margin-top: 0.3em; }
+
+/* slajd 2: drabina z dwoma końcami, 1946 i 2026 */
+.ladder-line span.pusty { background: #e8e8e8; color: $tekst-przygaszony; }
+.ladder-line.otwarcie { gap: 0.5em; align-items: flex-start; margin: 1.5em 0 2em; font-size: 0.9em; }
+.ladder-line.otwarcie div { flex: 1; }
+.ladder-line.otwarcie span { width: 100%; box-sizing: border-box; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
+.ladder-line.otwarcie b { font-size: 1em; color: $granat; }
+.ladder-line.otwarcie em { font-style: normal; font-size: 0.75em; line-height: 1.25; color: #555; }
+
+/* 347 · 28 na trzy sposoby; font Caveat ładuje fonty/caveat.html (nagłówek dokumentu) */
+.sposoby { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2em; margin-top: 0.3em; }
+.sposoby.dwa { grid-template-columns: repeat(2, 1fr); width: 70%; margin: 0.3em auto 0; }
+.sposob { text-align: center; }
+.sposob .tytul { display: block; font-size: 0.65em; font-weight: 700; margin-bottom: 0.2em; }
+.reveal .liczenie { width: 100%; height: auto; max-height: 330px; }
+.liczenie .reka { font-family: "Caveat", cursive; font-size: 36px; fill: #23307a; text-anchor: middle; }
+.liczenie .reka.male { font-size: 20px; }
+.liczenie .kreska { fill: none; stroke: #23307a; stroke-width: 2.2; stroke-linecap: round; }
+.liczenie .kratka { stroke: #cfe0f0; stroke-width: 1; }
+.liczenie .dymek { fill: #eef3f8; stroke: #9db4cc; stroke-width: 2; }
+.liczenie .mysl { font-size: 23px; fill: #333; text-anchor: middle; }
+.liczenie .mysl.wynik { font-weight: 700; fill: $granat; }
+.liczenie .glowa { fill: $granat; }
+.liczenie .obudowa { fill: #3a3f47; }
+.liczenie .ekran { fill: #c8d5b9; }
+.liczenie .cyfry { font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 34px; fill: #222; text-anchor: end; }
+.liczenie .klawisz { fill: #5a606a; }
+.liczenie .klawisz.dzialanie { fill: $pomarancz; }
+.liczenie .etykieta-klawisza { font-size: 20px; fill: white; text-anchor: middle; }
+.udzial { display: flex; height: 0.7em; margin: 0.4em 8% 0.2em; border-radius: 0.2em; overflow: hidden; }
+.udzial p { display: contents; }
+.udzial .glowa { display: block; background: $granat; }
+.udzial .narzedzie { display: block; background: $pomarancz; }
+.sposob .opis { display: block; font-size: 0.55em; line-height: 1.25; color: #555; }
+
+/* dowód Appela i Hakena: stos kartek, ściana konfiguracji, oś czasu; kroki z fragmentów */
+.reveal .appel-haken { width: 100%; height: auto; max-height: 540px; }
+.appel-haken .kartka { fill: white; stroke: #999; stroke-width: 1.5; }
+.appel-haken .podpis { font-size: 23px; fill: #555; text-anchor: middle; }
+.appel-haken .podpis.mocny { font-weight: 700; fill: #222; font-size: 24px; }
+.appel-haken .konfiguracja line { stroke: #888; stroke-width: 2.5; }
+.appel-haken .konfiguracja line.wnetrze { stroke: $granat; stroke-width: 4; }
+.appel-haken .konfiguracja line.obwod { stroke: #bbb; stroke-dasharray: 6 5; }
+.appel-haken .w-pierscieniu { fill: white; stroke: #888; stroke-width: 2.5; }
+.appel-haken .w-srodku { fill: $granat; }
+.appel-haken .stopien { fill: white; font-size: 20px; font-weight: 700; text-anchor: middle; }
+.appel-haken .opis-konfiguracji { font-size: 23px; fill: #444; }
+.appel-haken .opis-konfiguracji.mocny { font-weight: 700; fill: #222; }
+.appel-haken .opis-konfiguracji.drobny { font-size: 23px; fill: $tekst-przygaszony; }
+.appel-haken .os { stroke: #999; stroke-width: 2; }
+.appel-haken .punkt { fill: $granat; }
+.appel-haken .rok { font-size: 24px; font-weight: 700; fill: $granat; text-anchor: middle; }
+.appel-haken .opis { font-size: 23px; fill: #444; text-anchor: middle; }
+.appel-haken .krzyz { stroke: $czerwien; stroke-width: 14; stroke-linecap: round; fill: none; }
+.appel-haken .blad .punkt { fill: $czerwien; }
+.appel-haken .blad .rok, .appel-haken .blad .opis { fill: $czerwien; }
+.appel-haken .blad, .appel-haken .koniec { opacity: 0; transition: opacity 0.5s; }
+.reveal section:has(.ah-blad.visible) .appel-haken .blad { opacity: 1; }
+.reveal section:has(.ah-koniec.visible) .appel-haken .koniec { opacity: 1; }
+
+/* pętla Appela i Hakena: powrót „nie” i wyjście „tak” na kolejne kroki */
+.reveal .petla-ah { width: 100%; height: auto; max-height: 540px; }
+.petla-ah .kto { font-size: 26px; font-weight: 700; text-anchor: middle; }
+.petla-ah .blok { fill: white; stroke-width: 4; }
+.petla-ah .tytul-bloku { font-size: 24px; font-weight: 700; fill: #222; text-anchor: middle; }
+.petla-ah .liczba { font-size: 52px; font-weight: 700; text-anchor: middle; }
+.petla-ah .podpis-bloku { font-size: 23px; fill: #555; text-anchor: middle; }
+.petla-ah .szkielet { font-size: 23px; font-style: italic; fill: $tekst-przygaszony; text-anchor: middle; }
+.petla-ah .etykieta { font-size: 24px; font-weight: 700; fill: #444; text-anchor: middle; }
+.petla-ah .etykieta.drobna { font-size: 23px; font-weight: 400; fill: $tekst-przygaszony; }
+.petla-ah .etykieta.zielona { fill: $zielen-tekst; text-anchor: end; }
+.petla-ah .nie, .petla-ah .tak { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.petla-nie.visible) .petla-ah .nie { opacity: 1; }
+.reveal section:has(.petla-tak.visible) .petla-ah .tak { opacity: 1; }
+// pętla FunSearch: ten sam układ co pętla Appela i Hakena; ludzie w pasie nad pętlą
+.reveal .fs-pytanie { display: block; font-size: 0.75em; margin-bottom: 0.4em; }
+.reveal .petla-fs { max-height: 500px; }
+.petla-fs .pas-ludzi { fill: #eef1f5; stroke-width: 3; }
+.petla-fs .tytul-bloku, .petla-fs .podpis-bloku, .petla-fs .etykieta, .petla-fs .etykieta.drobna { font-size: 25px; }
+.petla-fs .pas-tekst { font-size: 25px; fill: #333; text-anchor: middle; }
+.petla-fs .etykieta.granat { fill: $granat; text-anchor: end; }
+// na wejściu duża ℤ₃²; klik: znika, wchodzi pętla; klik: powrót; klik: 512 i „czytają program” razem
+.petla-fs .petla, .petla-fs .powrot, .petla-fs .wynik, .petla-fs .ludzie-czytaja { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.fs-petla.visible) .petla-fs .petla { opacity: 1; }
+.reveal section:has(.fs-powrot.visible) .petla-fs .powrot { opacity: 1; }
+.reveal section:has(.fs-wynik.visible) .petla-fs .wynik,
+.reveal section:has(.fs-wynik.visible) .petla-fs .ludzie-czytaja { opacity: 1; }
+.petla-fs .plaszczyzna { transition: opacity 0.6s; }
+.reveal section:has(.fs-petla.visible) .petla-fs .plaszczyzna { opacity: 0; }
+.petla-fs .pole { fill: #eef1f5; stroke: white; stroke-width: 3; }
+.petla-fs .pole.wziete { fill: $pomarancz; }
+.petla-fs .obwodka { fill: none; stroke-width: 7; }
+.petla-fs .wsp { font-size: 25px; fill: $tekst-przygaszony; text-anchor: middle; }
+.petla-fs .opis-z3 { font-size: 26px; fill: #444; }
+// FunSearch: funkcja startowa ludzi i znaleziona przez model; potem wiersze z el[i] == el[-i]
+.reveal .funsearch-kod { width: 100%; height: auto; max-height: 580px; }
+.funsearch-kod .szkielet-opis { font-size: 26px; fill: #555; font-style: italic; text-anchor: middle; }
+.funsearch-kod .kto { font-size: 26px; font-weight: 700; text-anchor: middle; }
+.funsearch-kod .kod-tlo { fill: #f4f6f9; stroke-width: 2; }
+.funsearch-kod .kod { font-family: "DejaVu Sans Mono", monospace; font-size: 25px; fill: #222; white-space: pre; }
+.funsearch-kod .pominiete { font-size: 24px; font-style: italic; fill: $tekst-przygaszony; }
+.funsearch-kod .kw { fill: $granat; font-weight: 700; }
+.funsearch-kod .fn { fill: #6a3d9a; }
+.funsearch-kod .wynik { font-size: 52px; font-weight: 700; text-anchor: middle; }
+.funsearch-kod .podpis { font-size: 26px; fill: #555; text-anchor: middle; }
+.funsearch-kod .opis-symetrii { font-size: 26px; text-anchor: middle; }
+.funsearch-kod .opis-symetrii .kod { font-size: 27px; font-weight: 700; fill: $pomarancz; }
+.funsearch-kod .pasek-symetrii { fill: $pomarancz; opacity: 0; transition: opacity 0.6s; }
+.funsearch-kod .znaleziona, .funsearch-kod .symetria-opis { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.fs-znaleziona.visible) .funsearch-kod .znaleziona { opacity: 1; }
+.reveal section:has(.fs-symetria.visible) .funsearch-kod .pasek-symetrii { opacity: 0.18; }
+.reveal section:has(.fs-symetria.visible) .funsearch-kod .symetria-opis { opacity: 1; }
+
+// Slajd bez widocznego tytułu (nazwa zostaje w menu), gdy rysunek sam się podpisuje
+.reveal section.bez-tytulu > h2 { display: none; }
+
+// Dwie drogi programowania: quicksort i LeNet-5
+.reveal .dwie-drogi { width: 100%; height: auto; max-height: 690px; }
+.dwie-drogi .podzial { stroke: #ddd; stroke-width: 2; }
+.dwie-drogi .tor { font-size: 23px; font-weight: 700; letter-spacing: 0.1em; }
+.dwie-drogi .pyta { font-size: 23px; fill: #555; font-style: italic; }
+.dwie-drogi .kod-tlo { fill: #f4f6f9; stroke: $granat; stroke-width: 2; }
+.dwie-drogi .kod { font-family: "DejaVu Sans Mono", monospace; font-size: 22.5px; fill: #222; }
+.dwie-drogi .kod .kw, .dwie-drogi .kod .def { fill: $granat; font-weight: 700; }
+.dwie-drogi .kod .fn { fill: #6a3d9a; }
+.dwie-drogi .wzor { font-family: "DejaVu Serif", serif; font-style: italic; font-size: 34px; fill: $pomarancz; text-anchor: middle; }
+.dwie-drogi .drobny { font-size: 23px; fill: $tekst-przygaszony; }
+.dwie-drogi .piksele { image-rendering: pixelated; }
+.dwie-drogi .warstwa { font-size: 23px; fill: $tekst-przygaszony; }
+.dwie-drogi .wezel { font-family: "DejaVu Sans Mono", monospace; font-size: 23px; fill: #555; text-anchor: middle; }
+.dwie-drogi .wezel .os { fill: $granat; font-weight: 700; }
+.dwie-drogi .krawedz { stroke: #9bb0c6; stroke-width: 2; }
+.dwie-drogi .kreska-wyniku { stroke: $granat; stroke-width: 2; }
+.dwie-drogi .wynik { font-family: "DejaVu Sans Mono", monospace; font-size: 24px; font-weight: 700; fill: $granat; text-anchor: middle; }
+.dwie-drogi .werdykt { font-size: 25px; }
+.dwie-drogi .werdykt .mocny { font-weight: 700; }
+
+// FrontierMath: rekordy do nasycenia
+.reveal .miarka { width: 100%; height: auto; max-height: 580px; }
+.miarka .naglowek { font-size: 28px; font-weight: 700; fill: #222; }
+.miarka .pod-naglowkiem { font-size: 24px; fill: $tekst-przygaszony; font-style: italic; }
+.miarka .siatka { stroke: #e3e3e3; stroke-width: 2; }
+.miarka .os-y { font-size: 24px; fill: $tekst-przygaszony; text-anchor: end; }
+.miarka .os-x { font-size: 24px; fill: $tekst-przygaszony; text-anchor: middle; }
+.miarka .rok { font-size: 24px; fill: $tekst-przygaszony; font-weight: 700; text-anchor: middle; }
+.miarka .krzywa { fill: none; stroke: $pomarancz; stroke-width: 4; }
+.miarka .punkt { fill: $pomarancz; }
+.miarka .wartosc { font-size: 26px; font-weight: 700; fill: $pomarancz; }
+.miarka .model { font-size: 24px; fill: $tekst-przygaszony; }
+.miarka .model.end { text-anchor: end; }
+.miarka .model.middle { text-anchor: middle; }
+.miarka .kreska { stroke: #bbb; stroke-width: 2; }
+.miarka .przypis { font-size: 24px; fill: $tekst-przygaszony; font-style: italic; text-anchor: end; }
+.miarka .nasycony-opis { font-size: 26px; fill: #555; font-style: italic; text-anchor: end; }
+
+// Problemy otwarte: FrontierMath Erdős
+.reveal .erdos { width: 100%; height: auto; max-height: 580px; }
+.erdos .naglowek { font-size: 26px; font-weight: 700; fill: #222; }
+.erdos .pod-naglowkiem { font-size: 24px; fill: $tekst-przygaszony; font-style: italic; }
+.erdos .naglowek-maly { font-size: 24px; font-weight: 700; fill: #555; }
+.erdos .warunek { font-size: 24px; fill: #333; }
+.erdos .model { font-size: 24px; fill: $tekst-przygaszony; }
+.erdos .model.liczba { text-anchor: end; font-weight: 700; }
+.erdos .miesiac { font-size: 24px; fill: $tekst-przygaszony; }
+.erdos .data-erdos { font-weight: 400; fill: $tekst-przygaszony; }
+.erdos .model.najlepszy { fill: $zielen-tekst; font-weight: 700; }
+.erdos .kafel { fill: #f4f4f4; stroke: #ccc; stroke-width: 1.5; }
+.erdos .kafel.rozwiazany { fill: $zielen; stroke: $zielen; }
+.erdos .wynik-erdos { font-size: 34px; font-weight: 700; fill: #444; }
+.erdos .wynik-erdos .zielony { fill: $zielen-tekst; }
+.erdos .poza-opis { font-size: 24px; fill: #555; font-style: italic; }
+.erdos .wyniki, .erdos .poza { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.erdos-wyniki.visible) .erdos .wyniki { opacity: 1; }
+.reveal section:has(.erdos-poza.visible) .erdos .poza { opacity: 1; }
+
+// AlphaTensor: plansze 2×2 (ruch 1, potem ruchy 2–7 same) i schodki 4×4; 47 i 48 na kolejne kroki
+.reveal .alphatensor { width: 100%; height: auto; max-height: 560px; }
+.alphatensor .naglowek { font-size: 27px; font-weight: 700; fill: #222; text-anchor: middle; }
+.alphatensor .litera.do-prawej { text-anchor: end; }
+.alphatensor .litera { font-family: "DejaVu Serif", serif; font-style: italic; font-size: 25px; fill: #555; text-anchor: middle; }
+.alphatensor .opis { font-size: 25px; fill: #555; text-anchor: middle; }
+.alphatensor .opis.mocny { font-weight: 700; fill: #222; }
+.alphatensor .linia-siatki { stroke: #eee; stroke-width: 2; }
+.alphatensor .os-y { font-size: 25px; fill: $tekst-przygaszony; text-anchor: end; }
+.alphatensor .schodki { fill: none; stroke: #888; stroke-width: 4; }
+.alphatensor .skok { fill: none; stroke: $pomarancz; stroke-width: 4; stroke-dasharray: 7 5; }
+.alphatensor .punkt { stroke: white; stroke-width: 3; }
+.alphatensor .punkt.szary { fill: $tekst-przygaszony; }
+.alphatensor .punkt.granat { fill: $granat; }
+.alphatensor .punkt.pomarancz { fill: $pomarancz; }
+.alphatensor .liczba { font-size: 40px; font-weight: 700; text-anchor: middle; }
+.alphatensor .liczba.koniec { text-anchor: end; }
+.alphatensor .liczba.szara { fill: $tekst-przygaszony; }
+.alphatensor .liczba.granat { fill: $granat; }
+.alphatensor .liczba.pomarancz { fill: $pomarancz; }
+.alphatensor .podpis { font-size: 25px; fill: #444; text-anchor: middle; }
+.alphatensor .podpis.koniec { text-anchor: end; }
+.alphatensor .podpis.drobny { font-size: 25px; fill: $tekst-przygaszony; }
+.alphatensor .opis.ruch { fill: $pomarancz; font-weight: 700; }
+.alphatensor .opis.drobny { font-size: 25px; fill: $tekst-przygaszony; }
+.alphatensor .r47, .alphatensor .r48 { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.at-47.visible) .alphatensor .r47 { opacity: 1; }
+.reveal section:has(.at-48.visible) .alphatensor .r48 { opacity: 1; }
+.alphatensor .litera.mala { font-size: 25px; }
+.alphatensor .wyraz { font-family: "DejaVu Serif", serif; font-style: italic; font-size: 25px; text-anchor: middle; fill: #333; }
+.alphatensor .pole { stroke: white; stroke-width: 2; }
+.alphatensor .pole.puste { fill: #eef1f5; }
+.alphatensor .pole.brakuje { fill: $granat; }
+.alphatensor .pole.nadmiar { fill: $pomarancz; }
+.alphatensor .slad { fill: none; stroke: $pomarancz; stroke-width: 2.5; stroke-dasharray: 5 3; }
+.alphatensor .pole.nadmiar + .slad { stroke: white; }
+.alphatensor .tlo-stanu { fill: white; }
+.alphatensor .stan:not(.stan-0) { opacity: 0; transition: opacity 0.4s; }
+.reveal section:has(.at-ruch.visible) .alphatensor .stan-1 { opacity: 1; }
+.reveal section:has(.at-strassen.visible) .alphatensor .stan:not(.stan-0):not(.stan-1) { animation: ah-pokaz 0.3s var(--d) forwards; }
+@keyframes ah-pokaz { to { opacity: 1; } }
+// olimpiada: IMO 2024 i 2025 na tej samej skali (6 zadań po 7 pkt); rok 2025 na klik
+.reveal .olimpiada { width: 100%; height: auto; max-height: 590px; }
+.olimpiada .wstep { font-size: 27px; fill: $tekst-przygaszony; }
+.olimpiada .kreska { stroke: #bbb; stroke-width: 2; }
+.olimpiada .rok { font-size: 31px; font-weight: 700; fill: #222; }
+.olimpiada .system { font-size: 27px; font-weight: 400; fill: $tekst-przygaszony; }
+.olimpiada .zadanie { stroke-width: 3; }
+.olimpiada .zadanie.brak { fill: white; stroke: #bbb; stroke-dasharray: 8 6; }
+.olimpiada .zadanie.srebro { fill: #c9cdd2; stroke: #8a9097; }
+.olimpiada .zadanie.zloto { fill: #e6c35c; stroke: #b8901f; }
+.olimpiada .nr { font-size: 28px; font-weight: 700; fill: #222; text-anchor: middle; }
+.olimpiada .nr.brak { fill: $tekst-przygaszony; }
+.olimpiada .punkty { font-size: 32px; font-weight: 700; fill: #6f560e; }
+.olimpiada .prog { font-size: 27px; fill: $tekst-przygaszony; }
+.olimpiada .warunek { font-size: 27px; fill: #444; }
+.olimpiada .rok-2025 { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.ol-2025.visible) .olimpiada .rok-2025 { opacity: 1; }
+
+// zagęszczenie: mała oś 1946–2026, klik — blok 2021–2026 w przybliżeniu, klik — liczba wyników w latach
+.reveal .zageszczenie { width: 100%; height: auto; max-height: 580px; }
+.zageszczenie .os-mala { stroke: #333; stroke-width: 3; }
+.zageszczenie .blok { fill: #e8e8e8; stroke: #888; stroke-width: 2; stroke-dasharray: 6 4; }
+.zageszczenie .punkt-maly, .zageszczenie .punkt { fill: #333; }
+.zageszczenie .rok-maly { font-size: 24px; fill: $tekst-przygaszony; text-anchor: middle; }
+
+.zageszczenie .podpis-maly { font-size: 24px; fill: #555; text-anchor: middle; }
+.zageszczenie .stozek { fill: #f2f2f2; }
+.zageszczenie .os { stroke: #333; stroke-width: 3; }
+.zageszczenie .dzis { font-size: 24px; font-weight: 700; fill: $pomarancz; }
+.zageszczenie .granica-roku { stroke: #ddd; stroke-width: 1.5; }
+.zageszczenie .rok { font-size: 24px; fill: $tekst-przygaszony; text-anchor: middle; }
+.zageszczenie .odniesienie { stroke: #aaa; stroke-width: 1.5; }
+.zageszczenie .wynik { font-size: 24px; fill: #222; }
+.zageszczenie .lupa { opacity: 0; transition: opacity 0.6s; }
+.reveal section:has(.zg-lupa.visible) .zageszczenie .lupa { opacity: 1; }
+
+// Hipoteza jakobianowa: kod SymPy i wynik
+.reveal .jakobian .hipoteza { font-size: 0.78em; border-left: 0.25em solid $granat; background: #eef3f8; padding: 0.25em 0.6em; margin: 0.3em 0 0.5em; transition: background 0.3s, border-color 0.3s; }
+.reveal .jakobian .hipoteza p { margin: 0; }
+.reveal section:has(.jc-kontr.visible) .hipoteza { border-left-color: $czerwien; background: #fbeaea; }
+.reveal .jakobian .kto { font-size: 0.6em; color: #555; margin-left: 0.5em; }
+.reveal .jakobian div.sourceCode { margin: 0.3em 0 0; }
+.reveal .jakobian div.sourceCode pre code { font-size: 1em; line-height: 1.25; max-height: none; }
+.reveal .jakobian .cell-output pre { margin: 0.2em 0 0; }
+.reveal .jakobian .cell-output pre code { font-size: 1em; line-height: 1.25; color: #2e6b26; font-weight: bold; padding: 0.3em 0.6em; background: #eef6ec; }
+
+// Navier–Stokes: pytanie Claya, wykres wybuchu, karta ze slajdu 1, status
+.reveal .navier-stokes .pytanie { font-size: 0.85em; margin-bottom: 0.4em; }
+.reveal .navier-stokes .columns { align-items: center; }
+.reveal .navier-stokes .event { font-size: 0.8em; }
+.reveal .navier-stokes .status { font-size: 0.6em; color: #555; line-height: 1.35; border-left: 0.25em solid #999; padding: 0.1em 0 0.1em 0.6em; margin-top: 0.8em; }
+.reveal .navier-stokes .status p { margin: 0.25em 0; }
+.reveal .navier-stokes .status .date { font-weight: 700; color: #555; }
+.reveal .wybuch { width: 100%; height: auto; max-height: 420px; }
+.wybuch .os { stroke: #555; stroke-width: 2.5; }
+.wybuch .grot { fill: #555; }
+.wybuch .opis-osi { font-size: 32px; fill: #555; }
+.wybuch .asymptota { stroke: #999; stroke-width: 2; stroke-dasharray: 8 6; }
+.wybuch .krzywa { fill: none; stroke: $granat; stroke-width: 5; stroke-linecap: round; }
+
+// Matematyka hurtem: karta ze slajdu 1, problem Zariskiego w ramce (po kliku czerwienieje)
+.reveal .hurt-slajd .columns { align-items: flex-start; padding-top: 1em; }
+.reveal .hurt-slajd .event { font-size: 0.76em; }
+.reveal .hurt-slajd .uwaga { font-size: 0.6em; color: $tekst-przygaszony; font-style: italic; }
+.reveal .hurt-slajd .zariski { font-size: 0.95em; border-left: 0.25em solid $granat; background: #eef3f8; padding: 0.3em 0.6em; transition: background 0.3s, border-color 0.3s; }
+.reveal .hurt-slajd .zariski p { margin: 0.15em 0; }
+.reveal .hurt-slajd .tytul-problemu { font-size: 0.75em; font-weight: 700; color: $granat; }
+.reveal .hurt-slajd .podpowiedz { font-size: 0.7em; color: #555; margin: 0.4em 0 0.8em 0.4em; }
+.reveal .hurt-slajd .zariski-nie { font-size: 0.95em; }
+.reveal .hurt-slajd .kontrprzyklad { margin: 0.3em 0 0.4em 0.4em; }
+.reveal .hurt-slajd .kontrprzyklad p { margin: 0.1em 0; }
+.reveal section:has(.zariski-nie.visible) .zariski { border-left-color: $czerwien; background: #fbeaea; }
+.reveal section:has(.zariski-nie.visible) .tytul-problemu { color: $czerwien; }
+
+// Eksperyment na żywo: zadanie demo
+.reveal .demo .columns { align-items: center; }
+.reveal .demo-zadanie { width: 100%; height: auto; max-height: 460px; }
+.demo-zadanie .punkt { fill: $granat; }
+.demo-zadanie .cel { fill: #fff; stroke: $granat; stroke-width: 3; }
+.demo-zadanie .litera { font-size: 30px; font-weight: 700; fill: $granat; text-anchor: middle; }
+.reveal .demo .zadanie-demo { font-size: 0.85em; border-left: 0.25em solid $granat; background: #eef3f8; padding: 0.3em 0.6em; }
+.reveal .demo .zadanie-demo p { margin: 0.1em 0; }
+.reveal .demo .podpowiedz { font-size: 0.7em; color: #555; margin: 0.4em 0 0.8em 0.4em; }
+.reveal .demo .podpowiedz p { margin: 0; }
+.reveal .demo .start-demo { font-size: 0.9em; line-height: 1.35; }
+
+// slajd końcowy: kadr z HAL-em (plik lokalny) i kod QR
+.reveal .koniec .columns { align-items: center; }
+.reveal .koniec img.hal { width: 440px; max-height: 440px; display: block; margin: 0 auto; }
+.reveal .koniec .column > svg.qr { width: 70%; height: auto; display: block; margin: 0 auto; }
+.reveal .koniec .adres { font-size: 0.6em; color: #555; text-align: center; margin-top: 0.3em; }
+.reveal .koniec .big { text-align: center; }
+
+// Kto udowodnił to twierdzenie? (podsumowanie): siatka przykład × szczebel
+.reveal .autorstwo { width: 100%; height: auto; max-height: 580px; }
+.autorstwo .szczebel { font-size: 24px; fill: #333; text-anchor: middle; font-weight: 700; }
+.autorstwo .przyklad { font-size: 24px; fill: #222; }
+.autorstwo .kiedy { font-size: 24px; fill: $tekst-przygaszony; text-anchor: end; }
+.autorstwo .czlowiek { fill: $granat; }
+.autorstwo .maszyna { fill: $pomarancz; }
+.autorstwo .czym { font-size: 24px; fill: white; text-anchor: middle; font-weight: 700; }
+.autorstwo .ramka { fill: none; stroke: #222; stroke-width: 4; }
+.autorstwo .puenta { font-size: 25px; fill: #222; text-anchor: middle; }
+.autorstwo .krok1, .autorstwo .krok2, .autorstwo .krok3, .autorstwo .pytanie { opacity: 0; transition: opacity 0.5s; }
+.reveal section:has(.au-krok1.visible) .autorstwo .krok1,
+// wiersz demo (.krok3) wchodzi razem z 2025–2026
+.reveal section:has(.au-krok2.visible) .autorstwo .krok2,
+.reveal section:has(.au-krok2.visible) .autorstwo .krok3,
+.reveal section:has(.au-pytanie.visible) .autorstwo .pytanie { opacity: 1; }
+
+// Platon: papirus na całą szerokość, pod nim słowa Thamusa
+.reveal .platon img { display: block; width: 100%; max-height: 330px; object-fit: contain; margin: 0 auto; }
+.reveal .platon .caption { text-align: center; margin-top: 0; }
+.reveal .platon .thamus { font-size: 0.95em; border-left: 0.25em solid $granat; padding-left: 0.6em; margin: 0.4em 0; }
+.reveal .platon .big { text-align: center; color: $granat; }

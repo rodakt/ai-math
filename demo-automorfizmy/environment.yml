@@ -1,0 +1,13 @@
+# Środowisko eksperymentu: mamba env create -f environment.yml
+# Zawiera narzędzia zarządcy (Python, jq, gh) i agentów (Sage z Singularem).
+# Poza nim potrzebne są: claude, git, latexmk + pdflatex (pakiety polski, lmodern).
+name: demo-automorfizmy
+channels:
+  - conda-forge
+dependencies:
+  - sage
+  - sympy
+  - numpy
+  - matplotlib
+  - jq
+  - gh

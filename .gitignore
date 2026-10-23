@@ -1,0 +1,28 @@
+# Wyniki renderowania (odtwarzalne, nie commitujemy)
+/_output/
+/.quarto/
+*_files/
+
+# _freeze/ JEST commitowany: pozwala renderować bez Pythona
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# System / edytory
+.DS_Store
+*~
+.vscode/
+.idea/
+
+**/*.quarto_ipynb
+
+# Cudze PDF-y i notatki źródłowe (prawa autorskie), tylko lokalnie
+/sources/
+
+# MNIST pobierany przez narzedzia/trenuj_lenet.py
+/narzedzia/_mnist/
+
+# obrazy bez praw do publikacji (np. kadr z „2001”), każdy podstawia własne
+img/lokalne/

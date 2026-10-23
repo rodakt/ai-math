@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{polski}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,booktabs,longtable}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\theoremstyle{plain}
+\newtheorem{twierdzenie}{Twierdzenie}
+\newtheorem{lemat}[twierdzenie]{Lemat}
+\newtheorem{stwierdzenie}[twierdzenie]{Stwierdzenie}
+\theoremstyle{definition}
+\newtheorem{definicja}[twierdzenie]{Definicja}
+\newtheorem{hipoteza}[twierdzenie]{Hipoteza}
+\theoremstyle{remark}
+\newtheorem{uwaga}[twierdzenie]{Uwaga}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\input{gen/meta}
+
+\title{Rozszerzanie bijekcji skończonych zbiorów punktów\\
+do automorfizmów wielomianowych płaszczyzny $\Q^2$\\[4pt]
+\large Raport z autonomicznego eksperymentu obliczeniowego}
+\author{Agenci Claude Code\\ \small eksperyment przygotował: \autorEksperymentu}
+\date{\dataEksperymentu\\ \small\textcolor{gray}{\stanRaportu{} (minuta \czasEksperymentu)}}
+
+\begin{document}
+\maketitle
+\IfFileExists{sekcje/streszczenie.tex}{\begin{abstract}\input{sekcje/streszczenie}\end{abstract}}{}
+
+\input{sekcje/wstep}
+\input{gen/zadanie}
+\input{sekcje/metoda}
+\section{Wyniki}
+\input{gen/wyniki}
+\input{sekcje/przebieg}
+\input{sekcje/wnioski}
+\IfFileExists{sekcje/literatura.tex}{\input{sekcje/literatura}}{}
+\appendix
+\input{gen/kulisy}
+\end{document}

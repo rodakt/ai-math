@@ -1,0 +1,5 @@
+raport/build/
+**/tmp/
+**/__pycache__/
+logi/*.err
+raport/tmp_red/
